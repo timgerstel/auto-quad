@@ -9,9 +9,6 @@ import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by Tim on 6/22/2017.
- */
 public class BiPolarUtilTest {
     @Rule
     public Timeout global = new Timeout(1000L, TimeUnit.MILLISECONDS);
