@@ -6,6 +6,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.Timeout;
 
+import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.*;
@@ -19,13 +20,13 @@ public class MatrixTest {
     
     @Before
     public void before(){
-        a = new Matrix(5, 1);
-        b = new Matrix(5, 4);
-        c = Matrix.createColumnMatrix(5);
-        d = Matrix.createRowMatrix(5);
-        e = new Matrix(1, 5);
+        a = new Matrix(5, 1, "Mat A");
+        b = new Matrix(5, 4, "Mat B");
+        c = Matrix.createColumnMatrix(5, "Mat C");
+        d = Matrix.createRowMatrix(5, "Mat D");
+        e = new Matrix(1, 5, "Mat E");
         int ind = 0;
-        f = new Matrix(b.getRows(), b.getCols());
+        f = new Matrix(b.getRows(), b.getCols(), "Mat F");
         for(int i = 0; i < b.getRows(); i++){
             for(int j = 0; j < b.getCols(); j++){
                 b.set(i, j, ind);
@@ -85,12 +86,29 @@ public class MatrixTest {
     public void testSubmatrix(){
         Matrix sub = b.submatrix(0, 1, 0, b.getCols());
         Matrix sub2 = b.rowSubmatrix(0);
+        Matrix sub3 = b.colSubmatrix(0);
         assertTrue(sub.isVector());
         assertFalse(sub.isEmpty());
-        for(int i = 0; i < b.getCols(); i++){
-            assertTrue(b.get(0, i) == sub.get(0, i));
-            assertTrue(b.get(0, i) == sub2.get(0, i));
+        for(int i = 0; i < b.getRows(); i++){
+            for(int j = 0; j < b.getCols(); j++) {
+                assertTrue(b.get(0, j) == sub.get(0, j));
+                assertTrue(b.get(0, j) == sub2.get(0, j));
+            }
+            assertTrue(b.get(i,0) == sub3.get(i, 0));
         }
+    }
+    
+    @Test
+    public void testToPackedArray(){
+        double[] bArray = b.toPackedArray();
+        System.out.println(b.label + " toPackedArray(): ");
+        System.out.println("Length: " + bArray.length);
+        System.out.println(Arrays.toString(bArray));
+    }
+    
+    @Test
+    public void testPrint(){
+        b.print();
     }
     
 }
