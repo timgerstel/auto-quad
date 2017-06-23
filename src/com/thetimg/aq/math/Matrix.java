@@ -1,24 +1,48 @@
 package com.thetimg.aq.math;
 
+import java.util.Arrays;
+
 public class Matrix {
     
     private double[][] matrix;
     private int rows, cols;
     private boolean isVector = false;
     protected boolean isEmpty = true;
+    public String label = "No Label (Shoutout Migos)";
     
-    public Matrix(int rows, int cols){
+    public Matrix(int rows, int cols) {
         this.rows = rows;
         this.cols = cols;
-        if(rows == 1 || cols == 1){
-            isVector = true;
-        }
+        if (rows == 0 || cols == 0) {
+            System.out.println("Cannot create 0 x 0 matrix");
+            this.matrix = new double[1][1];
+        } else {
+            if (rows == 1 || cols == 1) {
+                isVector = true;
+            }
         this.matrix = new double[rows][cols];
+     }
     }
     
-    private Matrix(double[][] matrix){
+    public Matrix(int rows, int cols, String label){
+        this.rows = rows;
+        this.cols = cols;
+        this.label = label;
+        if(rows == 0 || cols == 0){
+            System.out.println("Cannot create 0 x 0 matrix");
+            this.matrix = new double[1][1];
+        } else {
+            if (rows == 1 || cols == 1) {
+                isVector = true;
+            }
+            this.matrix = new double[rows][cols];
+        }
+    }
+    
+    private Matrix(double[][] matrix, String label){
         this.rows = matrix.length;
         this.cols = matrix[0].length;
+        this.label = label;
         if(rows == 1 || cols == 1){
             isVector = true;
         }
@@ -36,13 +60,13 @@ public class Matrix {
     }
     
     //Returns an empty column matrix
-    public static Matrix createColumnMatrix(int cols){
-       return new Matrix(1, cols);
+    public static Matrix createColumnMatrix(int cols, String label){
+       return new Matrix(1, cols, label);
     }
     
     //Returns an empty row matrix
-    public static Matrix createRowMatrix(int rows){
-        return new Matrix(rows, 1);
+    public static Matrix createRowMatrix(int rows, String label){
+        return new Matrix(rows, 1, label);
     }
     
     //Add value to every element in matrix
@@ -63,7 +87,7 @@ public class Matrix {
     
     //Returns a copy of this Matrix object
     public Matrix clone(){
-        Matrix ret = new Matrix(matrix);
+        Matrix ret = new Matrix(matrix, this.label + " Clone");
         ret.isEmpty = isEmpty;
         return ret;
     }
@@ -115,7 +139,7 @@ public class Matrix {
     }
     
     public Matrix rowSubmatrix(int row){
-        Matrix ret = new Matrix(1, cols);
+        Matrix ret = new Matrix(1, cols, this.label);
         ret.isEmpty = isEmpty;
         for(int i = 0; i < cols; i++){
             ret.set(0, i, matrix[row][i]);
@@ -124,7 +148,7 @@ public class Matrix {
     }
     
     public Matrix colSubmatrix(int col){
-        Matrix ret = new Matrix(rows, 1);
+        Matrix ret = new Matrix(rows, 1, this.label);
         ret.isEmpty = isEmpty;
         for(int i = 0; i < rows; i++){
             ret.set(i, 0, matrix[i][col]);
@@ -134,7 +158,7 @@ public class Matrix {
     
     //Return submatrix for the given start and end indices
     public Matrix submatrix(int rowStart, int rowEnd, int colStart, int colEnd){
-        Matrix ret = new Matrix(rowEnd - rowStart,colEnd - colStart);
+        Matrix ret = new Matrix(rowEnd - rowStart,colEnd - colStart, this.label);
         ret.isEmpty = isEmpty;
         for(int i = 0; i < ret.getRows(); i++){
             for(int j = 0; j < ret.getCols(); j++){
@@ -154,6 +178,12 @@ public class Matrix {
             }
         }
         return ret;
+    }
+    
+    public void print(){
+        for(double[] rows : matrix){
+            System.out.println(Arrays.toString(rows));
+        }
     }
     
 }
