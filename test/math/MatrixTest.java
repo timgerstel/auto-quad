@@ -75,11 +75,11 @@ public class MatrixTest {
     
     @Test
     public void testIsVector(){
-        assertTrue(a.isVector());
+        assertTrue(a.isColVector());
         Matrix e = a.clone();
-        assertTrue(e.isVector());
-        assertFalse(b.isVector());
-        assertTrue(this.e.isVector());
+        assertTrue(e.isColVector());
+        assertFalse(b.isColVector() || b.isRowVector());
+        assertTrue(this.e.isRowVector());
     }
     
     @Test
@@ -87,7 +87,7 @@ public class MatrixTest {
         Matrix sub = b.submatrix(0, 1, 0, b.getCols());
         Matrix sub2 = b.rowSubmatrix(0);
         Matrix sub3 = b.colSubmatrix(0);
-        assertTrue(sub.isVector());
+        assertTrue(sub.isRowVector());
         assertFalse(sub.isEmpty());
         for(int i = 0; i < b.getRows(); i++){
             for(int j = 0; j < b.getCols(); j++) {
