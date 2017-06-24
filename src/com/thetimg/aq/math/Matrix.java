@@ -6,7 +6,7 @@ public class Matrix {
     
     private double[][] matrix;
     private int rows, cols;
-    private boolean isVector = false;
+    private boolean isRowVector = false, isColVector = false;
     protected boolean isEmpty = true;
     public String label = "No Label (Shoutout Migos)";
     
@@ -17,11 +17,14 @@ public class Matrix {
             System.out.println("Cannot create 0 x 0 matrix");
             this.matrix = new double[1][1];
         } else {
-            if (rows == 1 || cols == 1) {
-                isVector = true;
+            if(rows == 1){
+                isRowVector = true;
             }
-        this.matrix = new double[rows][cols];
-     }
+            if(cols == 1){
+                isColVector = true;
+            }
+            this.matrix = new double[rows][cols];
+        }
     }
     
     public Matrix(int rows, int cols, String label){
@@ -32,19 +35,25 @@ public class Matrix {
             System.out.println("Cannot create 0 x 0 matrix");
             this.matrix = new double[1][1];
         } else {
-            if (rows == 1 || cols == 1) {
-                isVector = true;
+            if(rows == 1){
+                isRowVector = true;
+            }
+            if(cols == 1){
+                isColVector = true;
             }
             this.matrix = new double[rows][cols];
         }
     }
     
-    private Matrix(double[][] matrix, String label){
+    public Matrix(double[][] matrix, String label){
         this.rows = matrix.length;
         this.cols = matrix[0].length;
         this.label = label;
-        if(rows == 1 || cols == 1){
-            isVector = true;
+        if(rows == 1){
+            isRowVector = true;
+        }
+        if(cols == 1){
+            isColVector = true;
         }
         this.matrix = matrix;
     }
@@ -117,8 +126,12 @@ public class Matrix {
         return true;
     }
     
-    public boolean isVector(){
-        return this.isVector;
+    public boolean isRowVector(){
+        return isRowVector;
+    }
+    
+    public boolean isColVector() {
+        return isColVector;
     }
     
     public boolean isEmpty(){
@@ -184,6 +197,10 @@ public class Matrix {
         for(double[] rows : matrix){
             System.out.println(Arrays.toString(rows));
         }
+    }
+    
+    public double[][] toArray(){
+        return matrix;
     }
     
 }
