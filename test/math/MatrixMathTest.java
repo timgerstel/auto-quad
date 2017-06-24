@@ -45,4 +45,18 @@ public class MatrixMathTest {
             }
         }
     }
+    
+    @Test
+    public void testDivide(){
+        Matrix c = a.clone();
+        c.clear();
+        Matrix d = MatrixMath.divide(a, b);
+        Matrix e = MatrixMath.divide(a, c);
+        for(int i = 0; i < a.getRows(); i++){
+            for(int j = 0; j < a.getCols(); j++){
+                assertEquals(a.get(i, j) / b.get(i, j), d.get(i, j), 0.0);
+                assertTrue(e.equals(a));
+            }
+        }
+    }
 }
