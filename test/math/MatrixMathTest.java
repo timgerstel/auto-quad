@@ -16,7 +16,7 @@ public class MatrixMathTest {
     @Rule
     public Timeout global = new Timeout(1000L, TimeUnit.MILLISECONDS);
     
-    private Matrix a, b;
+    private Matrix a, b, c;
     
     @Before
     public void before(){
@@ -25,9 +25,12 @@ public class MatrixMathTest {
         for(int i = 0; i < a.getRows(); i++){
             for(int j = 0; j < a.getCols(); j++){
                 a.set(i, j, ind);
-                a.set(i, j, ind);
                 ind++;
             }
+        }
+        a = new Matrix(5, 1, "Mat A");
+        for(int i = 0; i < a.getRows(); i++){
+            a.set(i, 0, i);
         }
         b = a.clone();
     }
@@ -58,5 +61,28 @@ public class MatrixMathTest {
                 assertTrue(e.equals(a));
             }
         }
+    }
+    
+    @Test
+    public void testDotProduct(){
+    
+    }
+    
+    @Test
+    public void testMultiply(){
+        Matrix c = a.clone();
+        c.clear();
+        Matrix d = MatrixMath.multiply(a, MatrixMath.transpose(b));
+        Matrix e = MatrixMath.multiply(a, c);
+        d.print();
+    }
+    
+    @Test
+    public void testTranspose(){
+        Matrix c = MatrixMath.transpose(a);
+        assertEquals(a.getRows(), c.getCols());
+        a.print();
+        System.out.println("Transpose of Mat A: ");
+        c.print();
     }
 }
