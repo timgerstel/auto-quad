@@ -54,17 +54,42 @@ public class MatrixMath {
     }
     
     public static double dotProduct(Matrix a, Matrix b){
-        Matrix dot = new Matrix(a.getRows(), a.getCols(), a.label + "\\U+2022" + b.label);
+        double dot = 0.0;
         if((a.isRowVector() && b.isColVector()) || (a.isColVector()) && a.isRowVector()){
-        
+            for(int i = 0; i < a.getRows(); i++){
+                for(int j = 0; j < b.getCols(); j++){
+                    dot += a.get(i, 0) * b.get(j, 0);
+                }
+            }
         }
-        return dot.sum();
+        return dot;
     }
     
     public static Matrix multiply(Matrix a, Matrix b){
         String label = a.label + "*" + b.label;
         Matrix mult = new Matrix(a.getRows(), b.getCols(), label);
+        int rowCounter = 0;
+        if(a.getRows() == b.getCols()){
+            for(int i = 0; i < a.getRows(); i++){
+                for(int j = 0; j < b.getCols(); j++){
+                    mult.set(i, j, a.get(i,j) * b.get(i,j));
+                }
+            }
+            return mult;
+        }
+        System.out.println("Cannot multiply " + a.label + "x" + b.label);
         return mult;
+    }
+    
+    public static Matrix transpose(Matrix a){
+        String label = a.label + "^T";
+        Matrix transpose = new Matrix(a.getCols(), a.getRows(), label);
+        for(int i = 0; i < a.getCols(); i++){
+            for(int j = 0; j < a.getRows(); j++){
+                transpose.set(i, j, a.get(j, i));
+            }
+        }
+        return transpose;
     }
     
 }
