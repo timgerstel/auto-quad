@@ -17,13 +17,14 @@ public class MatrixTest {
     public Timeout global = new Timeout(1000L, TimeUnit.MILLISECONDS);
     
     private Matrix a, b, c, d, e, f;
+    private double[] data = {1.0, 2.0, 3.0, 4.0, 5.0};
     
     @Before
     public void before(){
         a = new Matrix(5, 1, "Mat A");
         b = new Matrix(5, 4, "Mat B");
-        c = Matrix.createColumnMatrix(5, "Mat C");
-        d = Matrix.createRowMatrix(5, "Mat D");
+        c = Matrix.createColMatrix(data, "Mat C");
+        d = Matrix.createRowMatrix(data, "Mat D");
         e = new Matrix(1, 5, "Mat E");
         int ind = 0;
         f = new Matrix(b.getRows(), b.getCols(), "Mat F");

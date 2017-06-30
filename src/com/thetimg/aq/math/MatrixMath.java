@@ -1,5 +1,7 @@
 package com.thetimg.aq.math;
 
+import com.sun.org.apache.xpath.internal.SourceTree;
+
 public class MatrixMath {
     
     //Sum every cell of the parameter matrices
@@ -18,6 +20,7 @@ public class MatrixMath {
                     }
                 }
             }
+            return add;
         }
         return add;
     }
@@ -49,36 +52,71 @@ public class MatrixMath {
                     }
                 }
             }
+            return div;
         }
         return div;
     }
     
     public static double dotProduct(Matrix a, Matrix b){
-        double dot = 0.0;
-        if((a.isRowVector() && b.isColVector()) || (a.isColVector()) && a.isRowVector()){
+        if((a.isRowVector() && b.isColVector()) || (a.isColVector()) && b.isRowVector()){
+            double dot = 0.0;
             for(int i = 0; i < a.getRows(); i++){
-                for(int j = 0; j < b.getCols(); j++){
-                    dot += a.get(i, 0) * b.get(j, 0);
-                }
+                    if(a.isRowVector()){
+                        dot += a.get(0, i) * b.get(i, 0);
+                    } else {
+                        dot += a.get(i, 0) * b.get(0, i);
+                    }
             }
+            return dot;
         }
-        return dot;
+        return -1.0;
+    }
+    
+    public static Matrix identity(Matrix a){
+        Matrix ident = new Matrix(a.getRows(), a.getCols(), "Identity of " + a.label);
+        if(a.isSquare()){
+            for(int i = 0; i < a.getRows(); i++){
+                ident.set(i, i, 1);
+            }
+            return ident;
+        }
+        return ident;
     }
     
     public static Matrix multiply(Matrix a, Matrix b){
         String label = a.label + "*" + b.label;
         Matrix mult = new Matrix(a.getRows(), b.getCols(), label);
-        int rowCounter = 0;
+        int rowCount = 0;
         if(a.getRows() == b.getCols()){
             for(int i = 0; i < a.getRows(); i++){
                 for(int j = 0; j < b.getCols(); j++){
-                    mult.set(i, j, a.get(i,j) * b.get(i,j));
+                    mult.set(i, j, dotProduct(a.rowSubmatrix(i), b.colSubmatrix(j)));
                 }
             }
             return mult;
         }
         System.out.println("Cannot multiply " + a.label + "x" + b.label);
         return mult;
+    }
+    
+    public static Matrix subtract(Matrix a, Matrix b){
+        String label = a.label + "-" + b.label;
+        Matrix sub = new Matrix(a.getRows(), a.getCols(), label);
+        if(dimensionsEqual(a, b)){
+            if(a.isEmpty() || b.isEmpty()) {
+                sub = b.isEmpty() ? new Matrix(a.toArray(), label) : new Matrix(b.toArray(), label);
+            } else {
+                int rows = a.getRows();
+                int cols = a.getCols();
+                for (int i = 0; i < rows; i++) {
+                    for (int j = 0; j < cols; j++) {
+                        sub.set(i, j, (a.get(i, j) - b.get(i, j)));
+                    }
+                }
+            }
+            return sub;
+        }
+        return sub;
     }
     
     public static Matrix transpose(Matrix a){
@@ -90,6 +128,17 @@ public class MatrixMath {
             }
         }
         return transpose;
+    }
+    
+    public static int vectorLength(Matrix a){
+        if(a.isRowVector()){
+            return a.toArray()[0].length;
+        }
+        if(a.isColVector()){
+            return a.toArray().length;
+        }
+        System.out.println("Cannot get vector length of a non vector.");
+        return 0;
     }
     
 }

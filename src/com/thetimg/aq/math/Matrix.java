@@ -6,8 +6,9 @@ public class Matrix {
     
     private double[][] matrix;
     private int rows, cols;
-    private boolean isRowVector = false, isColVector = false;
-    protected boolean isEmpty = true;
+    private static boolean isRowVector = false, isColVector = false;
+    private boolean isSquare = false;
+    private boolean isEmpty = true;
     public String label = "No Label (Shoutout Migos)";
     
     public Matrix(int rows, int cols) {
@@ -17,6 +18,9 @@ public class Matrix {
             System.out.println("Cannot create 0 x 0 matrix");
             this.matrix = new double[1][1];
         } else {
+            if(rows == cols){
+                isSquare = true;
+            }
             if(rows == 1){
                 isRowVector = true;
             }
@@ -35,6 +39,9 @@ public class Matrix {
             System.out.println("Cannot create 0 x 0 matrix");
             this.matrix = new double[1][1];
         } else {
+            if(rows == cols){
+                isSquare = true;
+            }
             if(rows == 1){
                 isRowVector = true;
             }
@@ -49,6 +56,9 @@ public class Matrix {
         this.rows = matrix.length;
         this.cols = matrix[0].length;
         this.label = label;
+        if(rows == cols){
+            isSquare = true;
+        }
         if(rows == 1){
             isRowVector = true;
         }
@@ -56,6 +66,23 @@ public class Matrix {
             isColVector = true;
         }
         this.matrix = matrix;
+    }
+    
+    private Matrix(double[] vector, String label){
+        this.label = label;
+        if(isRowVector){
+            this.rows = 1;
+            this.cols = vector.length;
+            this.matrix = new double[rows][cols];
+            matrix[0] = vector;
+        } else if(isColVector){
+            this.rows = vector.length;
+            this.cols = 1;
+            this.matrix = new double[rows][cols];
+            for(int i = 0; i < rows; i++){
+                matrix[i][0] = vector[i];
+            }
+        }
     }
     
     //Returns number of rows
@@ -69,13 +96,15 @@ public class Matrix {
     }
     
     //Returns an empty column matrix
-    public static Matrix createColumnMatrix(int cols, String label){
-       return new Matrix(1, cols, label);
+    public static Matrix createColMatrix(double[] vector, String label){
+        isColVector = true;
+        return new Matrix(vector, label);
     }
     
     //Returns an empty row matrix
-    public static Matrix createRowMatrix(int rows, String label){
-        return new Matrix(rows, 1, label);
+    public static Matrix createRowMatrix(double[] vector, String label){
+        isRowVector = true;
+        return new Matrix(vector, label);
     }
     
     //Add value to every element in matrix
@@ -132,6 +161,10 @@ public class Matrix {
     
     public boolean isColVector() {
         return isColVector;
+    }
+    
+    public boolean isSquare(){
+        return isSquare;
     }
     
     public boolean isEmpty(){
