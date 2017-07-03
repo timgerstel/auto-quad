@@ -54,6 +54,21 @@ public class Matrix {
         //System.out.println(label + " | isRowVector: " + isRowVector + " isColVector: " + isColVector);
     }
     
+    public Matrix(double[][] matrix){
+        this.rows = matrix.length;
+        this.cols = matrix[0].length;
+        this.matrix = matrix;
+        if(rows == cols){
+            isSquare = true;
+        }
+        if(rows == 1){
+            isRowVector = true;
+        } else if(cols == 1){
+            isColVector = true;
+        }
+      //  System.out.println("New Initialized Matrix: " + label + " | Rows: " + rows + " Cols: " + cols + " | isRowVector: " + isRowVector + " isColVector: " + isColVector);
+    }
+    
     public Matrix(double[][] matrix, String label){
         this.rows = matrix.length;
         this.cols = matrix[0].length;
@@ -67,7 +82,7 @@ public class Matrix {
         } else if(cols == 1){
             isColVector = true;
         }
-        System.out.println("New Initialized Matrix: " + label + " | Rows: " + rows + " Cols: " + cols + " | isRowVector: " + isRowVector + " isColVector: " + isColVector);
+       // System.out.println("New Initialized Matrix: " + label + " | Rows: " + rows + " Cols: " + cols + " | isRowVector: " + isRowVector + " isColVector: " + isColVector);
     }
     
     private Matrix(double[] vector, int row, String label){
@@ -100,8 +115,18 @@ public class Matrix {
     }
     
     //Returns an empty column matrix
+    public static Matrix createColMatrix(double[] vector){
+        return new Matrix(vector, 0, "No Label");
+    }
+    
+    //Returns an empty column matrix
     public static Matrix createColMatrix(double[] vector, String label){
         return new Matrix(vector, 0, label);
+    }
+    
+    //Returns an empty row matrix
+    public static Matrix createRowMatrix(double[] vector){
+        return new Matrix(vector, 1, "No Label");
     }
     
     //Returns an empty row matrix
