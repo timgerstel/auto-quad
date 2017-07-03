@@ -40,7 +40,7 @@ public class MatrixTest {
     @Test
     public void testIsEmpty(){
         System.out.println("// TEST IS EMPTY //");
-        assertFalse(b.isEmpty() && f.isEmpty());
+        assertFalse(b.isEmpty() && c.isEmpty() && d.isEmpty() && f.isEmpty());
         assertTrue(a.isEmpty() && e.isEmpty());
     }
     
