@@ -6,7 +6,7 @@ public class Matrix {
     
     private double[][] matrix;
     private int rows, cols;
-    private static boolean isRowVector = false, isColVector = false;
+    private boolean isRowVector = false, isColVector = false;
     private boolean isSquare = false;
     private boolean isEmpty = true;
     public String label = "No Label (Shoutout Migos)";
@@ -18,16 +18,15 @@ public class Matrix {
             System.out.println("Cannot create 0 x 0 matrix");
             this.matrix = new double[1][1];
         } else {
-            if(rows == cols){
+            this.matrix = new double[rows][cols];
+            if(this.rows == this.cols){
                 isSquare = true;
             }
             if(rows == 1){
                 isRowVector = true;
-            }
-            if(cols == 1){
+            } else if(cols == 1){
                 isColVector = true;
             }
-            this.matrix = new double[rows][cols];
         }
     }
     
@@ -35,37 +34,38 @@ public class Matrix {
         this.rows = rows;
         this.cols = cols;
         this.label = label;
-        if(rows == 0 || cols == 0){
-            System.out.println("Cannot create 0 x 0 matrix");
-            this.matrix = new double[1][1];
-        } else {
-            if(rows == cols){
-                isSquare = true;
-            }
+        System.out.println("New Matrix " + label + " | Rows: " + rows + " Cols: " + cols);
+        if(rows > 0 && cols > 0){
+            this.matrix = new double[rows][cols];
             if(rows == 1){
                 isRowVector = true;
             }
             if(cols == 1){
                 isColVector = true;
             }
-            this.matrix = new double[rows][cols];
+            if(rows == cols){
+                isSquare = true;
+            }
+        } else {
+            System.out.println("Cannot create matrix with a dimension <= 0");
         }
+        System.out.println(label + " | isRowVector: " + isRowVector + " isColVector: " + isColVector);
     }
     
     public Matrix(double[][] matrix, String label){
         this.rows = matrix.length;
         this.cols = matrix[0].length;
         this.label = label;
+        this.matrix = matrix;
         if(rows == cols){
             isSquare = true;
         }
         if(rows == 1){
             isRowVector = true;
-        }
-        if(cols == 1){
+        } else if(cols == 1){
             isColVector = true;
         }
-        this.matrix = matrix;
+        System.out.println("New Initialized Matrix: " + label + " | Rows: " + rows + " Cols: " + cols + " | isRowVector: " + isRowVector + " isColVector: " + isColVector);
     }
     
     private Matrix(double[] vector, int row, String label){
@@ -74,12 +74,14 @@ public class Matrix {
             this.rows = vector.length;
             this.cols = 1;
             isColVector = true;
+            this.matrix = new double[rows][cols];
             for(int i = 0; i < vector.length; i++){
                 set(i, 0, vector[i]);
             }
         } else {
             this.rows = 1;
             this.cols = vector.length;
+            this.matrix = new double[rows][cols];
             isRowVector = true;
             matrix[0] = vector;
         }
@@ -183,7 +185,7 @@ public class Matrix {
     }
     
     public Matrix rowSubmatrix(int row){
-        Matrix ret = new Matrix(1, cols, this.label);
+        Matrix ret = new Matrix(1, cols, this.label + " row Submatrix");
         ret.isEmpty = isEmpty;
         for(int i = 0; i < cols; i++){
             ret.set(0, i, matrix[row][i]);
@@ -192,7 +194,7 @@ public class Matrix {
     }
     
     public Matrix colSubmatrix(int col){
-        Matrix ret = new Matrix(rows, 1, this.label);
+        Matrix ret = new Matrix(rows, 1, this.label + " col Submatrix");
         ret.isEmpty = isEmpty;
         for(int i = 0; i < rows; i++){
             ret.set(i, 0, matrix[i][col]);
@@ -202,7 +204,7 @@ public class Matrix {
     
     //Return submatrix for the given start and end indices
     public Matrix submatrix(int rowStart, int rowEnd, int colStart, int colEnd){
-        Matrix ret = new Matrix(rowEnd - rowStart,colEnd - colStart, this.label);
+        Matrix ret = new Matrix(rowEnd - rowStart,colEnd - colStart, this.label + " SubMatrix");
         ret.isEmpty = isEmpty;
         for(int i = 0; i < ret.getRows(); i++){
             for(int j = 0; j < ret.getCols(); j++){
