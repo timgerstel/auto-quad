@@ -58,14 +58,14 @@ public class MatrixMath {
     }
     
     public static double dotProduct(Matrix a, Matrix b){
-        if((a.isRowVector() && b.isColVector()) || (a.isColVector()) && b.isRowVector()){
+        if((a.isRowVector() || a.isColVector()) && (b.isRowVector() || b.isColVector())){
             double dot = 0.0;
-            for(int i = 0; i < a.getRows(); i++){
-                    if(a.isRowVector()){
-                        dot += a.get(0, i) * b.get(i, 0);
-                    } else {
-                        dot += a.get(i, 0) * b.get(0, i);
-                    }
+            if(MatrixMath.vectorLength(a) == MatrixMath.vectorLength(b)){
+                double[] dataA = a.toPackedArray();
+                double[] dataB = b.toPackedArray();
+                for(int i = 0; i < dataA.length; i++){
+                    dot += dataA[i] * dataB[i];
+                }
             }
             return dot;
         }
