@@ -186,20 +186,20 @@ public class Matrix {
         return sum;
     }
     
-    public Matrix rowSubmatrix(int row){
+    public Matrix rowSubmatrix(int rowIndex){
         Matrix ret = new Matrix(1, cols, this.label + " row Submatrix");
         ret.isEmpty = isEmpty;
         for(int i = 0; i < cols; i++){
-            ret.set(0, i, matrix[row][i]);
+            ret.set(0, i, matrix[rowIndex][i]);
         }
         return ret;
     }
     
-    public Matrix colSubmatrix(int col){
+    public Matrix colSubmatrix(int colIndex){
         Matrix ret = new Matrix(rows, 1, this.label + " col Submatrix");
         ret.isEmpty = isEmpty;
         for(int i = 0; i < rows; i++){
-            ret.set(i, 0, matrix[i][col]);
+            ret.set(i, 0, matrix[i][colIndex]);
         }
         return ret;
     }
