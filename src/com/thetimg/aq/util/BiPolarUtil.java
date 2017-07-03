@@ -6,6 +6,14 @@ public class BiPolarUtil {
         return (value ? 1.0 : -1.0);
     }
     
+    public static double[] toDouble(boolean[] data){
+        double[] ret = new double[data.length];
+        for(int i = 0; i < ret.length; i++){
+                ret[i] = toDouble(data[i]);
+        }
+        return ret;
+    }
+    
     public static double[][] toDouble(boolean[][] data){
         double[][] ret = new double[data.length][data[0].length];
         for(int i = 0; i < ret.length; i++){
@@ -18,6 +26,14 @@ public class BiPolarUtil {
     
     public static boolean toBipolar(double value){
         return (value == 1.0);
+    }
+    
+    public static boolean[] toBipolar(double[] data){
+        boolean[] ret = new boolean[data.length];
+        for(int i = 0; i < ret.length; i++){
+            ret[i] = toBipolar(data[i]);
+        }
+        return ret;
     }
     
     public static boolean[][] toBipolar(double[][] data){
