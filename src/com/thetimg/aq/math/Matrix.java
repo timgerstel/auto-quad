@@ -68,20 +68,20 @@ public class Matrix {
         this.matrix = matrix;
     }
     
-    private Matrix(double[] vector, String label){
+    private Matrix(double[] vector, int row, String label){
         this.label = label;
-        if(isRowVector){
-            this.rows = 1;
-            this.cols = vector.length;
-            this.matrix = new double[rows][cols];
-            matrix[0] = vector;
-        } else if(isColVector){
+        if(row == 0){
             this.rows = vector.length;
             this.cols = 1;
-            this.matrix = new double[rows][cols];
-            for(int i = 0; i < rows; i++){
-                matrix[i][0] = vector[i];
+            isColVector = true;
+            for(int i = 0; i < vector.length; i++){
+                set(i, 0, vector[i]);
             }
+        } else {
+            this.rows = 1;
+            this.cols = vector.length;
+            isRowVector = true;
+            matrix[0] = vector;
         }
     }
     
@@ -97,14 +97,12 @@ public class Matrix {
     
     //Returns an empty column matrix
     public static Matrix createColMatrix(double[] vector, String label){
-        isColVector = true;
-        return new Matrix(vector, label);
+        return new Matrix(vector, 0, label);
     }
     
     //Returns an empty row matrix
     public static Matrix createRowMatrix(double[] vector, String label){
-        isRowVector = true;
-        return new Matrix(vector, label);
+        return new Matrix(vector, 1, label);
     }
     
     //Add value to every element in matrix

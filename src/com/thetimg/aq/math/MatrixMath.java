@@ -132,10 +132,10 @@ public class MatrixMath {
     
     public static int vectorLength(Matrix a){
         if(a.isRowVector()){
-            return a.toArray()[0].length;
+            return a.getCols();
         }
         if(a.isColVector()){
-            return a.toArray().length;
+            return a.getRows();
         }
         System.out.println("Cannot get vector length of a non vector.");
         return 0;
