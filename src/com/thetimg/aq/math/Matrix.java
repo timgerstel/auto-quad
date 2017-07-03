@@ -14,27 +14,6 @@ public class Matrix {
     public Matrix(int rows, int cols) {
         this.rows = rows;
         this.cols = cols;
-        if (rows == 0 || cols == 0) {
-            System.out.println("Cannot create 0 x 0 matrix");
-            this.matrix = new double[1][1];
-        } else {
-            this.matrix = new double[rows][cols];
-            if(this.rows == this.cols){
-                isSquare = true;
-            }
-            if(rows == 1){
-                isRowVector = true;
-            } else if(cols == 1){
-                isColVector = true;
-            }
-        }
-    }
-    
-    public Matrix(int rows, int cols, String label){
-        this.rows = rows;
-        this.cols = cols;
-        this.label = label;
-        System.out.println("New Matrix " + label + " | Rows: " + rows + " Cols: " + cols);
         if(rows > 0 && cols > 0){
             this.matrix = new double[rows][cols];
             if(rows == 1){
@@ -48,8 +27,31 @@ public class Matrix {
             }
         } else {
             System.out.println("Cannot create matrix with a dimension <= 0");
+            this.matrix = new double[1][1];
         }
-        System.out.println(label + " | isRowVector: " + isRowVector + " isColVector: " + isColVector);
+    }
+    
+    public Matrix(int rows, int cols, String label){
+        this.rows = rows;
+        this.cols = cols;
+        this.label = label;
+        //System.out.println("New Matrix " + label + " | Rows: " + rows + " Cols: " + cols);
+        if(rows > 0 && cols > 0){
+            this.matrix = new double[rows][cols];
+            if(rows == 1){
+                isRowVector = true;
+            }
+            if(cols == 1){
+                isColVector = true;
+            }
+            if(rows == cols){
+                isSquare = true;
+            }
+        } else {
+            System.out.println("Cannot create matrix with a dimension <= 0");
+            this.matrix = new double[1][1];
+        }
+        //System.out.println(label + " | isRowVector: " + isRowVector + " isColVector: " + isColVector);
     }
     
     public Matrix(double[][] matrix, String label){
