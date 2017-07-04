@@ -1,10 +1,13 @@
 package networks;
 
+import com.thetimg.aq.gui.networks.GuiHopfield;
 import com.thetimg.aq.networks.Hopfield;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.Timeout;
 
+import javax.swing.*;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
@@ -19,6 +22,13 @@ public class HopfieldTest {
     private final boolean[] p1 = {true, true, false, false};
     private final boolean[] p2 = {true, false, false, false};
     private boolean[] result;
+    
+    @Before
+    public void before(){
+//        GuiHopfield g = new GuiHopfield(hn);
+//        g.setSize(500, 700);
+//        g.start();
+    }
     
     @Test
     public void testHopfield(){
