@@ -1,18 +1,13 @@
 package networks;
 
-import com.thetimg.aq.gui.networks.GuiHopfield;
-import com.thetimg.aq.gui.networks.HopfieldWindow;
 import com.thetimg.aq.networks.Hopfield;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.Timeout;
 
-import javax.swing.*;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
-
-import static org.junit.Assert.*;
 
 public class HopfieldTest {
     
@@ -26,8 +21,7 @@ public class HopfieldTest {
     
     @Before
     public void before(){
-        HopfieldWindow h = new HopfieldWindow(hn);
-        h.show();
+    
     }
     
     @Test

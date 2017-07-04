@@ -29,7 +29,9 @@ public class GuiHopfield extends JFrame {
         super("Hopfield Training");
         hn = network;
         setSize(WIDTH, HEIGHT);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setContentPane(panel1);
+        setVisible(true);
     }
     
     private void createUIComponents() {
@@ -37,6 +39,7 @@ public class GuiHopfield extends JFrame {
         textPane1.setText("No data");
         StyledDocument doc = textPane1.getStyledDocument();
         try{
+            textPane1.setText("");
             double[][] matrix = hn.getMatrix().toArray();
             int i = 0;
             for(double[] row : matrix){
@@ -45,50 +48,6 @@ public class GuiHopfield extends JFrame {
         }catch(Exception e){
             System.err.print(e);
         }
-    }
-    
-    public JTextPane getTextPane1() {
-        return textPane1;
-    }
-    
-    public JButton getExecuteButton() {
-        return executeButton;
-    }
-    
-    public JButton getTrainButton() {
-        return trainButton;
-    }
-    
-    public JButton getClearMatrixButton() {
-        return clearMatrixButton;
-    }
-    
-    public JTextArea getTextArea1() {
-        return textArea1;
-    }
-    
-    public JComboBox getComboBox1() {
-        return comboBox1;
-    }
-    
-    public JComboBox getComboBox2() {
-        return comboBox2;
-    }
-    
-    public JComboBox getComboBox3() {
-        return comboBox3;
-    }
-    
-    public JComboBox getComboBox4() {
-        return comboBox4;
-    }
-    
-    public JPanel getComboPanel() {
-        return comboPanel;
-    }
-    
-    public JPanel getBottomPanel() {
-        return bottomPanel;
     }
     
 }
