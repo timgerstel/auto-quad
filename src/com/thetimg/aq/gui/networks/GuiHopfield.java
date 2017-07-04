@@ -67,6 +67,14 @@ public class GuiHopfield extends JFrame {
                 textArea1.setText(Arrays.toString(hn.present(BiPolarUtil.toBipolar(pattern))));
             }
         });
+    
+        clearMatrixButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                hn.getMatrix().clear();
+                updateMatrix();
+            }
+        });
     }
     
     private void updateMatrix(){
