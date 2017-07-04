@@ -1,6 +1,7 @@
 package networks;
 
 import com.thetimg.aq.gui.networks.GuiHopfield;
+import com.thetimg.aq.gui.networks.HopfieldWindow;
 import com.thetimg.aq.networks.Hopfield;
 import org.junit.Before;
 import org.junit.Rule;
@@ -25,9 +26,8 @@ public class HopfieldTest {
     
     @Before
     public void before(){
-//        GuiHopfield g = new GuiHopfield(hn);
-//        g.setSize(500, 700);
-//        g.start();
+        HopfieldWindow h = new HopfieldWindow(hn);
+        h.show();
     }
     
     @Test
