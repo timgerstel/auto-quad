@@ -1,10 +1,13 @@
 package com.thetimg.aq.gui.networks;
 
 import com.thetimg.aq.networks.Hopfield;
+import com.thetimg.aq.util.BiPolarUtil;
 import javafx.application.Application;
 
 import javax.swing.*;
 import javax.swing.text.StyledDocument;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Arrays;
 
 public class GuiHopfield extends JFrame {
@@ -23,6 +26,7 @@ public class GuiHopfield extends JFrame {
     private JPanel panel1;
     private JPanel comboPanel;
     private JPanel bottomPanel;
+    private JTextArea textArea2;
     private static Hopfield hn;
     
     public GuiHopfield(Hopfield network){
@@ -31,19 +35,54 @@ public class GuiHopfield extends JFrame {
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setContentPane(panel1);
+        addListeners();
+    }
+    
+    public void showWindow(){
         setVisible(true);
     }
     
+    public void addListeners(){
+        trainButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                double[] pattern = new double[4];
+                pattern[0] = (double) Integer.parseInt((String) comboBox1.getSelectedItem());
+                pattern[1] = (double) Integer.parseInt((String) comboBox2.getSelectedItem());
+                pattern[2] = (double) Integer.parseInt((String )comboBox3.getSelectedItem());
+                pattern[3] = (double) Integer.parseInt((String) comboBox4.getSelectedItem());
+                hn.train(BiPolarUtil.toBipolar(pattern));
+                updateMatrix();
+            }
+        });
+    
+        executeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                double[] pattern = new double[4];
+                pattern[0] = (double) Integer.parseInt((String) comboBox1.getSelectedItem());
+                pattern[1] = (double) Integer.parseInt((String) comboBox2.getSelectedItem());
+                pattern[2] = (double) Integer.parseInt((String )comboBox3.getSelectedItem());
+                pattern[3] = (double) Integer.parseInt((String) comboBox4.getSelectedItem());
+                textArea1.setText(Arrays.toString(hn.present(BiPolarUtil.toBipolar(pattern))));
+            }
+        });
+    }
+    
+    private void updateMatrix(){
+        textArea2.setText("");
+        double[][] matrix = hn.getMatrix().toArray();
+        for(double[] row : matrix){
+            textArea2.append(Arrays.toString(row) + "\n");
+        }
+    }
+    
     private void createUIComponents() {
-        textPane1 = new JTextPane();
-        textPane1.setText("No data");
-        StyledDocument doc = textPane1.getStyledDocument();
+        textArea2 = new JTextArea();
         try{
-            textPane1.setText("");
             double[][] matrix = hn.getMatrix().toArray();
-            int i = 0;
             for(double[] row : matrix){
-                doc.insertString(i++, Arrays.toString(row), null);
+                textArea2.append(Arrays.toString(row) + "\n");
             }
         }catch(Exception e){
             System.err.print(e);
