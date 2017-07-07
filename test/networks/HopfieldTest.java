@@ -19,11 +19,6 @@ public class HopfieldTest {
     private final boolean[] p2 = {true, false, false, false};
     private boolean[] result;
     
-    @Before
-    public void before(){
-    
-    }
-    
     @Test
     public void testHopfield(){
         hn.train(p1);
