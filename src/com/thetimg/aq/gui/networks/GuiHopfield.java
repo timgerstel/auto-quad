@@ -64,7 +64,7 @@ public class GuiHopfield extends JFrame {
                 pattern[1] = (double) Integer.parseInt((String) comboBox2.getSelectedItem());
                 pattern[2] = (double) Integer.parseInt((String )comboBox3.getSelectedItem());
                 pattern[3] = (double) Integer.parseInt((String) comboBox4.getSelectedItem());
-                textArea1.setText(Arrays.toString(hn.present(BiPolarUtil.toBipolar(pattern))));
+                textArea1.setText(Arrays.toString(BiPolarUtil.toDouble(hn.present(BiPolarUtil.toBipolar(pattern)))));
             }
         });
     

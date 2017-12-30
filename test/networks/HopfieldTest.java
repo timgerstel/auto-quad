@@ -1,5 +1,6 @@
 package networks;
 
+import com.thetimg.aq.gui.networks.GuiHopfield;
 import com.thetimg.aq.networks.Hopfield;
 import org.junit.Before;
 import org.junit.Rule;

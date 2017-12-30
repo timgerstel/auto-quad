@@ -53,6 +53,7 @@
               </grid>
             </constraints>
             <properties>
+              <background color="-13947088"/>
               <editable value="false"/>
               <enabled value="false"/>
             </properties>
@@ -130,8 +131,10 @@
           </grid>
         </constraints>
         <properties>
+          <background color="-13947088"/>
           <editable value="false"/>
           <enabled value="false"/>
+          <lineWrap value="false"/>
         </properties>
       </component>
     </children>
